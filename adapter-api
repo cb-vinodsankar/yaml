@@ -1,0 +1,454 @@
+openapi: 3.0.1
+info:
+  title: OpenAPI definition
+  version: v0
+servers:
+  - url: http://localhost:8081/
+    description: Generated server url
+tags:
+  - name: Transaction
+    description: Transaction related api
+  - name: PaymentMethod
+    description: PaymentMethod related api
+paths:
+  /paymentMethod/update:
+    post:
+      tags:
+        - PaymentMethod
+      summary: Update paymentMethod
+      operationId: updatePaymentMethod
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PaymentMethodRequest'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/PaymentMethodResponse'
+  /paymentMethod/delete:
+    post:
+      tags:
+        - PaymentMethod
+      summary: Delete paymentMethod
+      operationId: deletePaymentMethod
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PaymentMethodRequest'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/PaymentMethodResponse'
+  /paymentMethod/add:
+    post:
+      tags:
+        - PaymentMethod
+      summary: Add paymentMethod
+      operationId: addPaymentMethod
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PaymentMethodRequest'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/PaymentMethodResponse'
+  /payment/void:
+    post:
+      tags:
+        - Transaction
+      summary: Void Payment
+      operationId: voidPayment
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TransactionRequest'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/TransactionResponse'
+  /payment/refund:
+    post:
+      tags:
+        - Transaction
+      summary: Refund Payment
+      operationId: refundPayment
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TransactionRequest'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/TransactionResponse'
+  /payment/make:
+    post:
+      tags:
+        - Transaction
+      summary: Make Payment
+      operationId: makePayment
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TransactionRequest'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/TransactionResponse'
+  /payment/capture:
+    post:
+      tags:
+        - Transaction
+      summary: Capture Payment
+      operationId: capturePayment
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TransactionRequest'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/TransactionResponse'
+  /payment/authorize:
+    post:
+      tags:
+        - Transaction
+      summary: Authorize Payment
+      operationId: authorizePayment
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TransactionRequest'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/TransactionResponse'
+components:
+  schemas:
+    BankAccount:
+      type: object
+      properties:
+        iban:
+          type: string
+        accountNumber:
+          type: string
+        routingNumber:
+          type: string
+        accountType:
+          type: string
+        bankCode:
+          type: string
+        bankName:
+          type: string
+        additionalInformation:
+          type: object
+          additionalProperties:
+            type: object
+    BillingAddress:
+      type: object
+      properties:
+        company:
+          type: string
+        phone:
+          type: string
+        addressLine1:
+          type: string
+        addressLine2:
+          type: string
+        addressLine3:
+          type: string
+        city:
+          type: string
+        state:
+          type: string
+        country:
+          type: string
+        zip:
+          type: string
+    Card:
+      type: object
+      properties:
+        cardNumber:
+          type: string
+        cvv:
+          type: string
+        expiryMonth:
+          type: string
+        expiryYear:
+          type: string
+        billingAddress:
+          $ref: '#/components/schemas/BillingAddress'
+    Customer:
+      type: object
+      properties:
+        firstName:
+          type: string
+        lastname:
+          type: string
+        email:
+          type: string
+        company:
+          type: string
+        phone:
+          type: string
+        displayName:
+          type: string
+        vatNumber:
+          type: string
+        locale:
+          type: string
+        currency:
+          type: string
+        billingAddress:
+          $ref: '#/components/schemas/BillingAddress'
+    PaymentMethodRequest:
+      required:
+        - domain
+        - environment
+        - gatewayId
+        - gatewayName
+        - paymentMethodType
+        - requestId
+      type: object
+      properties:
+        firstName:
+          type: string
+        lastName:
+          type: string
+        customer:
+          $ref: '#/components/schemas/Customer'
+        gatewayCustomerId:
+          type: string
+        gatewayPaymentMethodToken:
+          type: string
+        gatewayTemporaryToken:
+          type: string
+        siteId:
+          type: integer
+          format: int64
+        gatewayReference:
+          type: string
+        requestId:
+          type: string
+        gatewayName:
+          type: string
+        gatewayId:
+          type: string
+        paymentMethodType:
+          type: string
+        environment:
+          type: string
+        domain:
+          type: string
+        billingAddress:
+          $ref: '#/components/schemas/BillingAddress'
+        upiID:
+          type: string
+        additionalInformation:
+          type: object
+          additionalProperties:
+            type: object
+        card:
+          $ref: '#/components/schemas/Card'
+        bankAccount:
+          $ref: '#/components/schemas/BankAccount'
+    PaymentMethodResponse:
+      type: object
+      properties:
+        paymentMethodType:
+          type: string
+        gatewayName:
+          type: string
+        requestId:
+          type: string
+        domain:
+          type: string
+        gatewayCustomerId:
+          type: string
+        gatewayPaymentMethodToken:
+          type: string
+        iin:
+          type: string
+        last4:
+          type: string
+        cardType:
+          type: string
+        mandateReference:
+          type: string
+        bankName:
+          type: string
+        referenceTxnId:
+          type: string
+        fundingType:
+          type: string
+        status:
+          type: string
+          enum:
+            - VALID
+            - PENDING_VERIFICATION
+            - INVALID
+            - INITIATED
+            - FAILED
+        expiryMonth:
+          type: string
+        expiryYear:
+          type: string
+        billingAddress:
+          $ref: '#/components/schemas/BillingAddress'
+        cardIssuingCountry:
+          type: string
+        additionalInformation:
+          type: string
+    ShippingAddress:
+      type: object
+      properties:
+        company:
+          type: string
+        phone:
+          type: string
+        addressLine1:
+          type: string
+        addressLine2:
+          type: string
+        addressLine3:
+          type: string
+        city:
+          type: string
+        state:
+          type: string
+        country:
+          type: string
+        zip:
+          type: string
+    TransactionRequest:
+      required:
+        - amount
+        - currency
+        - requestId
+      type: object
+      properties:
+        customer:
+          $ref: '#/components/schemas/Customer'
+        gatewayTransactionId:
+          type: string
+        billingAddress:
+          $ref: '#/components/schemas/BillingAddress'
+        shippingAddress:
+          $ref: '#/components/schemas/ShippingAddress'
+        paymentInitiator:
+          type: string
+          enum:
+            - CUSTOMER
+            - MERCHANT
+        paymentType:
+          type: string
+          enum:
+            - RECURRING
+            - RECURRING_FIRST
+            - FIRST
+            - ONE_TIME
+        amount:
+          type: integer
+          format: int64
+        currency:
+          type: string
+        statementDescriptor:
+          type: string
+        paymentMethodRequest:
+          $ref: '#/components/schemas/PaymentMethodRequest'
+        requestId:
+          type: string
+        ipAddress:
+          type: string
+        additionalInformation:
+          type: object
+          additionalProperties:
+            type: object
+        gatewayReference:
+          type: string
+        siteId:
+          type: integer
+          format: int64
+    TransactionResponse:
+      type: object
+      properties:
+        paymentMethodType:
+          type: string
+        gatewayName:
+          type: string
+        requestId:
+          type: string
+        domain:
+          type: string
+        gatewayTransactionId:
+          type: string
+        transactionStatus:
+          type: string
+          enum:
+            - SUCCESS
+            - FAILURE
+            - NEEDS_ATTENTION
+            - RECEIVED
+            - INITIATED
+            - IN_PROGRESS
+        gatewayStatus:
+          type: string
+          enum:
+            - VOIDED
+            - NOT_PRESENT
+            - NOT_APPLICABLE
+            - AUTHORISED
+            - CAPTURED
+            - CANCELLED
+            - RECEIVED
+        fraudStatus:
+          type: string
+          enum:
+            - UNKNOWN
+            - SAFE
+            - SUSPICIOUS
+            - FRAUDULENT
+        fraudReason:
+          type: string
+        paymentMethodResponse:
+          $ref: '#/components/schemas/PaymentMethodResponse'
