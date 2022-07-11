@@ -1,0 +1,208 @@
+openapi: 3.0.1
+info:
+  title: OpenAPI definition
+  version: v0
+servers:
+  - url: https://app.chargebee.com/
+    description: Generated server url
+tags:
+  - name: Webhook
+    description: Adapter Webhook related api
+paths:
+  /webhook/adapter:
+    post:
+      tags:
+        - Webhook
+      summary: Webhooks for Adapter
+      operationId: adapterWebhook
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Event'
+        required: true
+      responses:
+        '200':
+          description: OK
+
+components:
+  schemas:
+    Event:
+      type: object
+      properties:
+        eventId:
+          type: string
+        eventType:
+          type: string
+          enum:
+            - PAYMENT_UPDATE
+            - PAYMENT_METHOD_UPDATE
+        paymentMethodInfo:
+          $ref: '#/components/schemas/PaymentMethodResponse'
+        paymentInfo:
+          $ref: '#/components/schemas/PaymentResponse'
+    Address:
+      type: object
+      properties:
+        addressLine1:
+          type: string
+        addressLine2:
+          type: string
+        addressLine3:
+          type: string
+        city:
+          type: string
+        state:
+          type: string
+        country:
+          type: string
+        zip:
+          type: string
+    BillingInfo:
+      type: object
+      properties:
+        firstName:
+          type: string
+        lastName: 
+          type: string
+        email: 
+          type: string
+        phone: 
+          type: string
+        address:
+          $ref: '#/components/schemas/Address'
+    CardInfo:
+      type: object
+      properties:
+          iin:
+            type: string
+          last4:
+            type: string
+          type:
+            type: string
+            description: 'Type of the cards, it is like Credit, Debit and Prepaid'
+            example: 'Visa'
+          fundingType:
+            type: string
+          expiryMonth:
+            type: string
+          expiryYear:
+            type: string
+          issuingCountry:
+            type: string
+          scheme:
+            type: string
+    BankInfo:
+      type: object
+      properties:
+        mandateReference:
+          type: string
+        bankName:
+          type: string
+        ibanLast4:
+          type: string
+    UpiInfo:
+      type: object
+      properties:
+        id:
+          type: string
+          description: "UPI Id"
+          example: 'chargebee@hdfc'
+    error:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+        description:
+          type: string
+    PaymentMethodResponse:
+      type: object
+      properties:
+        gatewayName:
+          type: string
+        gatewayRequestReference:
+          type: string
+        merchantAccountIdentifier:
+          type: string
+        paymentMethodCustomerId:
+          type: string
+        paymentMethodType:
+          type: string
+        PaymentMethodToken:
+          type: string
+        card:
+          $ref: "#/components/schemas/CardInfo"
+        bankAccount:
+          $ref: '#/components/schemas/BankInfo'
+        upi:
+          $ref: '#/components/schemas/UpiInfo'
+        referenceTxnId:
+          type: string
+        status:
+          type: string
+          enum:
+            - VALID
+            - PENDING_VERIFICATION
+            - INVALID
+        billingInfo:
+          $ref: '#/components/schemas/BillingInfo'
+        additionalInformation:
+          type: string
+    PaymentResponse:
+      type: object
+      properties:
+        paymentTransactionId:
+          type: string
+        gatewayName:
+          type: string
+        gatewayRequestReference:
+          type: string
+        merchantAccountIdentifier:
+          type: string
+        amount:
+          type: integer
+          format: int64
+        currency:
+          type: string
+        status:
+          type: string
+          enum:
+            - AUTHORISED
+            - CAPTURED
+            - FAILURE
+            - UN_KNOWN
+            - IN_PROGRESS
+        fraudStatus:
+          type: string
+          enum:
+            - UN_KNOWN
+            - SUSPICIOUS
+            - FRAUDULENT
+        fraudReason:
+          type: string
+        paymentDate:
+          type: string
+          format: "yyyy-MM-dd'T'HH:mm:ssZ"
+        error:
+          $ref: "#/components/schemas/error"
+        paymentMethodInfo:
+          type: object
+          properties:
+            paymentMethodCustomerId:
+              type: string
+            paymentMethodType: 
+              type: string # VS add format for ["card", "upi", "bankAccount"]
+            paymentMethodToken: # VS we can use permanent token also here ?
+              type: string
+            card:
+              $ref: "#/components/schemas/CardInfo"
+            bankAccount:
+              $ref: "#/components/schemas/BankInfo"
+            upi:
+              $ref: '#/components/schemas/UpiInfo'
+            billingInfo:
+              $ref: '#/components/schemas/BillingInfo'
+        additionalInformation:
+          type: object
