@@ -1,0 +1,1131 @@
+openapi: 3.0.3
+info:
+  title: OpenAPI definition
+  version: v1
+servers:
+  - url: http://localhost:8090/api/v1/
+    description: Gateway adapter server URL
+tags:
+  - name: Transaction
+    description: API to manage transactions and payments
+  - name: PaymentMethod
+    description: API to manage payment methods
+paths:
+  /payment_methods/add:
+    post:
+      # security:
+      #  - bearerAuth: []
+      tags:
+        - PaymentMethod
+      summary: Add a payment method in the gateway for the customer
+      operationId: addPaymentMethod
+      parameters:
+        - $ref: '#/components/parameters/AppId'
+        - $ref: '#/components/parameters/Environment'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddPaymentMethodRequest'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaymentMethodResponse'
+        '400':
+          $ref: '#/components/responses/400Error'
+        '401':
+          $ref: '#/components/responses/400Error'
+        '403':
+          $ref: '#/components/responses/400Error'
+  /payment_methods/update:
+    post:
+      tags:
+        - PaymentMethod
+      summary: Update a payment method in the gateway for the customer
+      operationId: updatePaymentMethod
+      parameters:
+        - $ref: '#/components/parameters/AppId'
+        - $ref: '#/components/parameters/Environment'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdatePaymentMethodRequest'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaymentMethodResponse'
+        '400':
+          $ref: '#/components/responses/400Error'
+        '401':
+          $ref: '#/components/responses/400Error'
+        '403':
+          $ref: '#/components/responses/400Error'
+  /payment_methods/delete:
+    post:
+      tags:
+        - PaymentMethod
+      summary: Delete a payment method from the gateway
+      operationId: deletePaymentMethod
+      parameters:
+        - $ref: '#/components/parameters/AppId'
+        - $ref: '#/components/parameters/Environment'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeletePaymentMethodRequest'
+        required: true
+      responses:
+        '200':
+          description: OK
+        '400':
+          $ref: '#/components/responses/400Error'
+        '401':
+          $ref: '#/components/responses/400Error'
+        '403':
+          $ref: '#/components/responses/400Error'
+  /payment_methods/retrieve:
+    post:
+      tags:
+        - PaymentMethod
+      summary: Retrieve a payment method from the gateway
+      operationId: retrievePaymentMethod
+      parameters:
+        - $ref: '#/components/parameters/AppId'
+        - $ref: '#/components/parameters/Environment'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RetrievePaymentMethodRequest'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaymentMethodResponse'
+        '400':
+          $ref: '#/components/responses/400Error'
+        '401':
+          $ref: '#/components/responses/400Error'
+        '403':
+          $ref: '#/components/responses/400Error'
+  /payments/void:
+    post:
+      tags:
+        - Transaction
+      summary: Void a payment
+      operationId: voidPayment
+      parameters:
+        - $ref: '#/components/parameters/AppId'
+        - $ref: '#/components/parameters/Environment'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VoidPaymentRequest'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VoidPaymentResponse'
+        '400':
+          $ref: '#/components/responses/400Error'
+        '401':
+          $ref: '#/components/responses/400Error'
+        '403':
+          $ref: '#/components/responses/400Error'
+  /payments/refund:
+    post:
+      tags:
+        - Transaction
+      summary: Refund a payment
+      operationId: refundPayment
+      parameters:
+        - $ref: '#/components/parameters/AppId'
+        - $ref: '#/components/parameters/Environment'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RefundPaymentRequest'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RefundPaymentResponse'
+        '400':
+          $ref: '#/components/responses/400Error'
+        '401':
+          $ref: '#/components/responses/400Error'
+        '403':
+          $ref: '#/components/responses/400Error'
+  /payments/make:
+    post:
+      tags:
+        - Transaction
+      summary: Make payment
+      operationId: makePayment
+      parameters:
+        - $ref: '#/components/parameters/AppId'
+        - $ref: '#/components/parameters/Environment'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MakePaymentRequest'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaymentResponse'
+        '400':
+          $ref: '#/components/responses/400Error'
+        '401':
+          $ref: '#/components/responses/400Error'
+        '403':
+          $ref: '#/components/responses/400Error'
+  /payments/capture:
+    post:
+      tags:
+        - Transaction
+      summary: Capture Payment
+      operationId: capturePayment
+      parameters:
+        - $ref: '#/components/parameters/AppId'
+        - $ref: '#/components/parameters/Environment'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CapturePaymentRequest'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaymentResponse'
+        '400':
+          $ref: '#/components/responses/400Error'
+        '401':
+          $ref: '#/components/responses/400Error'
+        '403':
+          $ref: '#/components/responses/400Error'
+  /payments/make/verify:
+    post:
+      tags:
+        - Transaction
+      summary: Verify Payment
+      operationId: verifyPayment
+      parameters:
+        - $ref: '#/components/parameters/AppId'
+        - $ref: '#/components/parameters/Environment'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MakePaymentVerifyRequest'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaymentResponse'
+        '400':
+          $ref: '#/components/responses/400Error'
+        '401':
+          $ref: '#/components/responses/400Error'
+        '403':
+          $ref: '#/components/responses/400Error'
+  /payments/retrieve:
+    post:
+      tags:
+        - Transaction
+      summary: Retrieve Payment
+      operationId: retrievePayment
+      parameters:
+        - $ref: '#/components/parameters/AppId'
+        - $ref: '#/components/parameters/Environment'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RetrievePaymentRequest'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaymentResponse'
+        '400':
+          $ref: '#/components/responses/400Error'
+        '401':
+          $ref: '#/components/responses/400Error'
+        '403':
+          $ref: '#/components/responses/400Error'
+components:
+  schemas:
+    Event:
+      type: object
+      properties:
+        event_id:
+          type: string
+        event_type:
+          type: string
+          enum:
+            - payment_update
+            - payment_method_update
+            - account_updater
+            - refund_update
+          description: >
+            Description:
+              * `payment_update` - When a payment is updated
+              * `payment_method_update` - When a payment method is updated 
+              * `account_updater` - When the account details are updated 
+              * `refund_update` - When there are any updates in the refund request.
+        payment_method_info:
+          $ref: '#/components/schemas/PaymentMethodResponse'
+        payment_info:
+          $ref: '#/components/schemas/PaymentResponse'
+        refund_info:
+          $ref: '#/components/schemas/RefundPaymentResponse'
+        account_updater_info:
+          $ref: '#/components/schemas/PaymentMethodResponse'
+    ThreeDSInfo:
+      type: object
+      properties:
+        attempt_3D:
+          type: boolean
+          default: false
+          description: Whether 3D secure is supported on the card.
+        version:
+          type: string
+          description: Version of the 3D secure used. Refer Adyen or checkout.com
+          example: 2.1.0
+        challenge_indicator:
+          type: string
+          description: Possibility to specify the preference for a customer receiving a challenge from the Card issuer. The value depends on the gateway.
+          example: requestNoChallenge
+    BankAccount:
+      type: object
+      properties:
+        iban:
+          type: string
+          description: International bank account number - used in international money transfers. Identifies the individual bank account to which the transfer is to be made. Used in SEPA.
+        account_number:
+          type: string
+          description: Bank account number
+        routing_number:
+          type: string
+          description: Routing transit number for the bank account. Used to identify a financial institution or a bank.
+        account_type:
+          type: string
+          description: Bank account type, like "savings", "current", "checking" or depending on the country.
+          example: savings
+        bank_code:
+          type: string
+          description: Identification code of the bank. (bank_code or sort_code or bic) #todo
+        bank_name:
+          type: string
+          description: Name of the bank
+        additional_info:
+          type: object
+          description: Any other additional information related to the bank account
+    Gateway:
+      required:
+        - gateway_name
+        - credentials
+        - merchant_account_identifier
+        - app_request_id
+      type: object
+      properties:
+        gateway_name:
+          $ref: '#/components/schemas/GatewayName'
+        credentials:
+          type: object
+          description: Credential format and contents adhering to gateway's requirements
+        merchant_account_identifier:
+          $ref: '#/components/schemas/MerchantAccountIdentifier'
+        app_request_id:
+          $ref: '#/components/schemas/AppRequestReference'
+    Address:
+      type: object
+      properties:
+        address_line1:
+          type: string
+          description: Address line item 1.
+        address_line2:
+          type: string
+          description: Address line item 2.
+        address_line3:
+          type: string
+          description: Address line item 3.
+        city:
+          type: string
+          description: Name of the city, town or village
+        state:
+          type: string
+          description: State or province code.
+        country:
+          type: string
+          description: Two letter ISO country code in upper case
+          example: IN
+        zip:
+          type: string
+          description: Postal code or ZIP code.
+    BillingInfo:
+      type: object
+      properties:
+        first_name:
+          type: string
+        last_name:
+          type: string
+        email:
+          type: string
+        phone:
+          $ref: '#/components/schemas/Phone'
+        address:
+          $ref: '#/components/schemas/Address'
+    Card:
+      type: object
+      properties:
+        card_number:
+          type: string
+          description: Card number of the customer without any separators
+        cvv:
+          type: string
+          description: Card security code, a 3 or 4-digit number printed directly on the card
+        expiry_month:
+          $ref: '#/components/schemas/ExpiryMonth'
+        expiry_year:
+          $ref: '#/components/schemas/ExpiryYear'
+    CardInfo:
+      type: object
+      properties:
+        iin:
+          type: string
+          description: First six digits of the card number
+        last4:
+          type: string
+          description: Last four digits of the card number
+        expiry_month:
+          $ref: '#/components/schemas/ExpiryMonth'
+        expiry_year:
+          $ref: '#/components/schemas/ExpiryYear'
+        funding_type:
+          type: string
+          description: Type of the card like Credit, Debit and Prepaid
+          example: Credit
+        issuing_country:
+          type: string
+          description: Country which issued the card, 2-letter ISO country code in upper case
+          example: IN
+        scheme:
+          type: string
+          description: Brand of the card like Visa, Master and JCB, etc
+          example: Visa
+    BankInfo:
+      type: object
+      properties:
+        mandate_reference:
+          type: string
+          description: Record of the instruction, where the customer authorises the gateway to debit the payment through the specified payment method from the customer's account on a regular basis.
+        bank_name:
+          type: string
+          description: Name of the customer's bank
+        last4:
+          type: string
+          description: Last four digits of the bank account number
+    UpiInfo:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique ID for each customer used to facilitate transcations. Acts as a financial address.
+          example: chargebee@hdfc
+    Upi:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique ID for each customer used to facilitate transcations. Acts as a financial address.
+          example: chargebee@hdfc
+    PaymentRouteId:
+      type: string
+      description: Generated by the adapter for each gateway and payment method mapping. It will be generated and returned by the adapter in addPaymentMethod response. To identify the set of merchants connected to a particular <gateway, payment method> pair.
+    MerchantAccountIdentifier:
+      type: string
+      description: Used to uniquely identify the merchant's gateway and is mapped with webhook identifier. Useful in case of multiple connections to the same gateway.
+    PaymentTransactionId:
+      type: string
+      description: Unique identifier of the transaction returned by the Gateway.
+    Currency:
+      type: string
+      description: Three letter ISO currency code in lower case
+      example: usd
+    ExpiryMonth:
+      type: string
+      description: Two digit number representing the expiry month of the card
+      example: 05
+    ExpiryYear:
+      type: string
+      description: Four digit number representing the expiry year of the card
+      example: 2024
+    AppRequestReference:
+      type: string
+      description: Unique ID for the request. Reference ID for the app request to adapter. Used only for immediate request re-concilation. This cannot be used in retrieve payment request, if the audit is archived.
+    NetworkTransactionId:
+      type: string
+      description: Used to look up to the initial transaction. Also used to link subsequent payments back to the initial transaction in some of the payment methods.
+    Error:
+      type: object
+      description: Response format below changes depending on the implementation of each gateway within the adapter.
+      properties:
+        code:
+          type: string
+          description: Response code from the gateway
+        message:
+          type: string
+          description: Brief human-readable message from the gateway
+        description:
+          type: string
+          description: A detailed explanation of the error from the gateway
+    FraudInfo:
+      type: object
+      description: Fraud info is returned in the response from the gateway.
+      properties:
+        fraud_status:
+          type: string
+          enum:
+            - unknown
+            - suspicious
+            - fraudulent
+        fraud_reason:
+          type: string
+    PaymentMethod:
+      required:
+        - payment_method_type
+      type: object
+      properties:
+        payment_method_reference:
+          $ref: '#/components/schemas/PaymentMethodReference'
+        payment_method_type:
+          $ref: '#/components/schemas/PaymentMethodType'
+        payment_method_temp_token:
+          type: string
+          description: Single use or short-lived token is the tokenized form of customer's payment method by the gateway. This token can be later used to request a payment. For cases like apple_pay or google_pay, the payment temp token will be used to represent the customer's payment method.
+        card:
+          $ref: '#/components/schemas/Card'
+        bank_account:
+          $ref: '#/components/schemas/BankAccount'
+        upi:
+          $ref: '#/components/schemas/Upi'
+        billing_info :
+          $ref: '#/components/schemas/BillingInfo'
+    Customer:
+      type: object
+      properties:
+        first_name:
+          type: string
+          description: Customer's first name or full name or business name
+        last_name:
+          type: string
+          description: Customer's last name. The name format depends on the gateway.
+        email:
+          type: string
+          description: Customer's email address.
+        company:
+          type: string
+          description: Business name of the customer.
+        phone:
+          $ref: '#/components/schemas/Phone'
+        locale:
+          type: string
+          description: Customer's language tag based on IETF. Used to display the Customer Portal in the customer's desired language, if available. Mostly IETF language tag is used. The format depends on the gateway.
+        address:
+          $ref: '#/components/schemas/Address'
+    PaymentMethodReference:
+      type: object
+      properties:
+        payment_method_token:
+          type: string
+          description: Token that represents the customer's payment method. This token can be used to request a payment.
+        payment_method_customer_id:
+          type: string
+          description: Customer ID as persisted in the gateway.
+    AddPaymentMethodRequest:
+      required:
+        - gateway_info
+        - payment_method_info
+      type: object
+      properties:
+        gateway_info:
+          $ref: '#/components/schemas/Gateway'
+        payment_method_info:
+          $ref: '#/components/schemas/PaymentMethod'
+        card_verification:
+          type: object
+          properties:
+            amount:
+              type: integer
+              format: int64
+              description: Amount for which the card should be verified.
+            currency:
+              $ref: '#/components/schemas/Currency'
+        customer_info:
+          $ref: '#/components/schemas/Customer'
+        webhook_url:
+          type: string
+          description: Gateway specific webhook URL generated for each merchant
+        additional_info:
+          type: object
+          description: Any other additional information required by the gateway
+    UpdatePaymentMethodRequest:
+      required:
+        - gateway_info
+        - payment_method_reference
+        - payment_route_id
+      type: object
+      properties:
+        gateway_info:
+          $ref: '#/components/schemas/Gateway'
+        payment_method_reference:
+          $ref: '#/components/schemas/PaymentMethodReference'
+        payment_route_id:
+          $ref: '#/components/schemas/PaymentRouteId'
+        customer_info:
+          $ref: '#/components/schemas/Customer'
+        webhook_url:
+          type: string
+          description: Gateway specific webhook URL generated for each merchant
+        additional_info:
+          type: object
+          description: Any other additional information required by the gateway
+    DeletePaymentMethodRequest:
+      required:
+        - payment_method_reference
+        - gateway_info
+        - payment_route_id
+      type: object
+      properties:
+        payment_method_reference:
+          $ref: '#/components/schemas/PaymentMethodReference'
+        gateway_info:
+          $ref: '#/components/schemas/Gateway'
+        payment_route_id:
+          $ref: '#/components/schemas/PaymentRouteId'
+        webhook_url:
+          type: string
+          description: Gateway specific webhook URL generated for each merchant
+        additional_info:
+          type: object
+          description: Any other additional information required by the gateway
+    RetrievePaymentMethodRequest:
+      required:
+        - payment_method_reference
+        - gateway_info
+      type: object
+      properties:
+        payment_method_reference:
+          $ref: '#/components/schemas/PaymentMethodReference'
+        gateway_info:
+          $ref: '#/components/schemas/Gateway'
+        payment_route_id:
+          $ref: '#/components/schemas/PaymentRouteId'
+        payment_method_type:
+          $ref: '#/components/schemas/PaymentMethodType'
+        additional_info:
+          type: object
+          description: Any other additional information required by the gateway
+    PaymentMethodResponse:
+      type: object
+      properties:
+        app_request_id:
+          $ref: '#/components/schemas/AppRequestReference'
+        gateway_name:
+          $ref: '#/components/schemas/GatewayName'
+        gateway_request_reference:
+          type: string
+          description: Generated by the adapter to track the gateway request
+        merchant_account_identifier:
+          $ref: '#/components/schemas/MerchantAccountIdentifier'
+        payment_route_id:
+          $ref: '#/components/schemas/PaymentRouteId'
+        payment_method_reference:
+          $ref: '#/components/schemas/PaymentMethodReference'
+        payment_method_type:
+          $ref: '#/components/schemas/PaymentMethodType'
+        card:
+          $ref: '#/components/schemas/CardInfo'
+        bank_account:
+          $ref: '#/components/schemas/BankInfo'
+        upi:
+          $ref: '#/components/schemas/UpiInfo'
+        network_transaction_id:
+          $ref: '#/components/schemas/NetworkTransactionId'
+        status:
+          $ref: '#/components/schemas/PaymentMethodStatus'
+        billing_info:
+          $ref: '#/components/schemas/BillingInfo'
+        additional_info:
+          type: string
+          description: Any other additional information required by the gateway
+    MakePaymentRequest:
+      required:
+        - gateway_info
+        - payment_method_info
+        - amount
+        - currency
+      type: object
+      properties:
+        gateway_info:
+          $ref: '#/components/schemas/Gateway'
+        payment_method_info:
+          $ref: '#/components/schemas/PaymentMethod'
+        amount:
+          type: integer
+          format: int64
+        currency:
+          $ref: '#/components/schemas/Currency'
+        payment_route_id:
+          $ref: '#/components/schemas/PaymentRouteId'
+        three_ds_info:
+          $ref: '#/components/schemas/ThreeDSInfo'
+        customer_info:
+          $ref: '#/components/schemas/Customer'
+        payment_initiator:
+          $ref: '#/components/schemas/PaymentInitiator'
+        payment_type:
+          $ref: '#/components/schemas/PaymentType'
+        payment_action:
+          type: string
+          enum:
+            - auth
+            - auth_capture
+          description: >
+            Description:
+              * `auth` - Verifies whether the payment method and credentials are valid
+              * `auth_capture` - Verifies and captures the amount specified
+        store_payment_method:
+          type: boolean
+          description: Enable (or) disable vaulting the payment method
+          default: false
+        statement_descriptor:
+          type: string
+          description: Complete description that appears on customers' bank statements. Helps customers understand their transactions. Can be a static descriptor or dynamic.
+        shipping_address:
+          description: Address related to the subscription or the payment. Appears on invoices sent to the customer as a part of the payment.
+          $ref: '#/components/schemas/Address'
+        additional_info:
+          type: object
+          description: Any other additional information required by the gateway
+        webhook_url:
+          type: string
+          description: Gateway specific webhook URL generated for each merchant
+        network_transaction_id:
+          $ref: '#/components/schemas/NetworkTransactionId'
+    MakePaymentVerifyRequest:
+      required:
+        - gateway_info
+        - amount
+        - currency
+        - payment_transaction_id
+      type: object
+      properties:
+        gateway_info:
+          $ref: '#/components/schemas/Gateway'
+        amount:
+          type: integer
+          format: int64
+          description: Value for which the payment should be made
+        currency:
+          $ref: '#/components/schemas/Currency'
+        payment_transaction_id:
+          $ref: '#/components/schemas/PaymentTransactionId'
+        payment_route_id:
+          $ref: '#/components/schemas/PaymentRouteId'
+        payment_method_info:
+          $ref: '#/components/schemas/PaymentMethod'
+        three_ds_info:
+          $ref: '#/components/schemas/ThreeDSInfo'
+        customer_info:
+          $ref: '#/components/schemas/Customer'
+        payment_initiator:
+          $ref: '#/components/schemas/PaymentInitiator'
+        payment_type:
+          $ref: '#/components/schemas/PaymentType'
+        store_payment_method:
+          type: boolean
+          description: Enable (or) disable vaulting the payment method
+          default: false
+        statement_descriptor:
+          type: string
+          description: Explains charges or payments on bank statements. Helps customers understand their transactions. Can be a static descriptor or dynamic.
+        shipping_address:
+          $ref: '#/components/schemas/Address'
+        additional_info:
+          type: object
+          description: Any other additional information required by the gateway
+        webhook_url:
+          type: string
+          description: Gateway specific webhook URL generated for each merchant
+    CapturePaymentRequest:
+      required:
+        - gateway_info
+        - payment_transaction_id
+        - amount
+        - currency
+        - payment_route_id
+      type: object
+      properties:
+        gateway_info:
+          $ref: '#/components/schemas/Gateway'
+        payment_transaction_id:
+          $ref: '#/components/schemas/PaymentTransactionId'
+        amount:
+          type: integer
+          format: int64
+          description: Value for which the payment should be captured
+        currency:
+          $ref: '#/components/schemas/Currency'
+        payment_route_id:
+          $ref: '#/components/schemas/PaymentRouteId'
+        webhook_url:
+          type: string
+          description: Gateway specific webhook URL generated for each merchant
+    RefundPaymentRequest:
+      required:
+        - gateway_info
+        - payment_transaction_id
+        - amount
+        - currency
+        - payment_route_id
+      type: object
+      properties:
+        gateway_info:
+          $ref: '#/components/schemas/Gateway'
+        payment_transaction_id:
+          $ref: '#/components/schemas/PaymentTransactionId'
+        amount:
+          type: integer
+          format: int64
+        currency:
+          $ref: '#/components/schemas/Currency'
+        type:
+          type: string
+          enum:
+            - partial
+            - full
+          description: >
+            Description:
+              * `partial` - If a partial amount than the original payment amount is requested for refund. 
+              * `full` - If full payment amount is requested as refund.
+        payment_route_id:
+          $ref: '#/components/schemas/PaymentRouteId'
+        webhook_url:
+          type: string
+          description: Gateway specific webhook URL generated for each merchant
+    VoidPaymentRequest:
+      required:
+        - gateway_info
+        - payment_transaction_id
+        - payment_route_id
+      type: object
+      properties:
+        gateway_info:
+          $ref: '#/components/schemas/Gateway'
+        payment_transaction_id:
+          $ref: '#/components/schemas/PaymentTransactionId'
+        payment_route_id:
+          $ref: '#/components/schemas/PaymentRouteId'
+        webhook_url:
+          type: string
+          description: Gateway specific webhook URL generated for each merchant
+    RetrievePaymentRequest:
+      required:
+        - gateway_info
+      type: object
+      description: To retrieve the payment, `payment_transaction_id`, `payment_route_id` to be passed as pair
+      properties:
+        gateway_info:
+          $ref: '#/components/schemas/Gateway'
+        payment_transaction_id:
+          $ref: '#/components/schemas/PaymentTransactionId'
+        payment_route_id:
+          $ref: '#/components/schemas/PaymentRouteId'
+        gateway_request_reference:
+          type: string
+          description: Generated by the adapter to track the gateway request
+        app_request_reference:
+          $ref: '#/components/schemas/AppRequestReference'
+    PaymentResponse:
+      type: object
+      properties:
+        payment_transaction_id:
+          $ref: '#/components/schemas/PaymentTransactionId'
+        gateway_name:
+          $ref: '#/components/schemas/GatewayName'
+        app_request_id:
+          $ref: '#/components/schemas/AppRequestReference'
+        gateway_request_reference:
+          type: string
+          description: Generated by the adapter to track the gateway request
+        payment_route_id:
+          $ref: '#/components/schemas/PaymentRouteId'
+        merchant_account_identifier:
+          $ref: '#/components/schemas/MerchantAccountIdentifier'
+        timestamp:
+          type: integer
+          format: int64
+          description: Epoch timestamp (in seconds) when the payment response was returned
+        amount:
+          type: integer
+          format: int64
+          description: Value for which the payment was made
+        currency:
+          $ref: '#/components/schemas/Currency'
+        status:
+          type: string
+          enum:
+            - authorized
+            - captured
+            - failure
+            - needs_attention
+            - in_progress
+          description: >
+            Description:
+              * `authorized` - When the payment is authorized
+              * `captured` - When the payment is captured
+              * `failure` - When the payment failed
+              * `needs_attention` - When gateway returns unexpected response and solution requires manual intervention.
+              * `in_progress` - When the payment is in progress
+        fraud_info:
+          $ref: '#/components/schemas/FraudInfo'
+        error:
+          $ref: '#/components/schemas/Error'
+        payment_method_info:
+          type: object
+          properties:
+            payment_method_reference:
+              $ref: '#/components/schemas/PaymentMethodReference'
+            status:
+              $ref: '#/components/schemas/PaymentMethodStatus'
+            additional_info:
+              type: object
+            payment_method_type:
+              $ref: '#/components/schemas/PaymentMethodType'
+            card:
+              $ref: '#/components/schemas/CardInfo'
+            bank_account:
+              $ref: '#/components/schemas/BankInfo'
+            upi:
+              $ref: '#/components/schemas/UpiInfo'
+            billing_info:
+              $ref: '#/components/schemas/BillingInfo'
+            network_transaction_id:
+              $ref: '#/components/schemas/NetworkTransactionId'
+        additional_info:
+          type: object
+          description: Any other additional information required by the gateway
+    VoidPaymentResponse:
+      type: object
+      properties:
+        app_request_id:
+          $ref: '#/components/schemas/AppRequestReference'
+        payment_transaction_id:
+          $ref: '#/components/schemas/PaymentTransactionId'
+        gateway_name:
+          $ref: '#/components/schemas/GatewayName'
+        gateway_request_reference:
+          type: string
+          description: Generated by the adapter to track the gateway request
+        payment_route_id:
+          $ref: '#/components/schemas/PaymentRouteId'
+        merchant_account_identifier:
+          $ref: '#/components/schemas/MerchantAccountIdentifier'
+        status:
+          $ref: '#/components/schemas/VoidPaymentStatus'
+        timestamp:
+          type: integer
+          format: int64
+          description: Epoch timestamp (in seconds) when the void payment response was returned
+        error:
+          $ref: '#/components/schemas/Error'
+    RefundPaymentResponse:
+      type: object
+      properties:
+        app_request_id:
+          $ref: '#/components/schemas/AppRequestReference'
+        refund_transaction_id:
+          type: string
+        gateway_name:
+          $ref: '#/components/schemas/GatewayName'
+        gateway_request_reference:
+          type: string
+          description: Generated by the adapter to track the gateway request
+        payment_route_id:
+          $ref: '#/components/schemas/PaymentRouteId'
+        merchant_account_identifier:
+          $ref: '#/components/schemas/MerchantAccountIdentifier'
+        amount:
+          type: integer
+          format: int64
+          description: Value for which the refund payment was made
+        currency:
+          $ref: '#/components/schemas/Currency'
+        status:
+          $ref: '#/components/schemas/RefundPaymentStatus'
+        timestamp:
+          type: integer
+          format: int64
+          description: Epoch timestamp (in seconds) when the refund payment response was returned
+        error:
+          $ref: '#/components/schemas/Error'
+    ClientError:
+      type: object
+      properties:
+        error:
+          type: string
+          description: Internal error code that categorizes the error
+          example: validation_error
+        status:
+          type: integer
+          description: HTTP response code
+        message:
+          type: string
+          description: Brief human-readable message
+        description:
+          type: string
+          description: A detailed explanation of the error for the developer
+        timestamp:
+          type: integer
+          format: int64
+          description: Epoch timestamp (in seconds) when the error occurred
+        gateway_error:
+          $ref: '#/components/schemas/GatewayError'
+    GatewayError:
+      type: object
+      properties:
+        code:
+          type: string
+          enum: ["not_supported", "unauthorized", "request_connection_timeout", "resource_not_found", "invalid_param", "bad_request"]
+        message:
+          type: string
+        description:
+          type: string
+    PaymentMethodStatus:
+      type: string
+      enum: ["valid", "pending_verification", "invalid"]
+    RefundPaymentStatus:
+      type: string
+      enum: ["success", "failure", "needs_attention", "in_progress"]
+      description: >
+        Description:
+          * `success` - Refund payment successful
+          * `failure` - Failure in refunding payment
+          * `needs_attention` - When manual intervention is required to resolve the unexpected response from the gateway
+          * `in_progress` - Refund payment in progress
+    VoidPaymentStatus:
+      type: string
+      enum: [ "success", "failure", "needs_attention", "in_progress"]
+      description: >
+        Description:
+          * `success` - Void payment successful
+          * `failure` - Failure in voiding payment
+          * `needs_attention` - When manual intervention is required to resolve the unexpected response from the gateway
+          * `in_progress` - Voiding payment in progress
+    PaymentInitiator:
+      type: string
+      enum: ["customer", "merchant"]
+      description: >
+        Initiator of the payment:
+          * `customer` - Customer initiated transaction
+          * `merchant` - Merchant initiated transaction
+    PaymentType:
+      type: string
+      enum: ["recurring", "one_time"]
+      description: Type of the payment
+    PaymentMethodType:
+      type: string
+      description: >
+        Mode of payment (for create payments):
+          * `card`, `bancontact` - `Card` or the `payment_method_token` should be passed.
+          * `ach`, `sepa`, `pad`, `ideal`, `sofort` - `BankAccount` to be passed 
+          * `google_pay`, `apple_pay` - `payment_temp_token` should be passed, which we have received while setting up the payment method. 
+          * `upi` - `UpiInfo` object should be passed
+      enum: ["card", "paypal_express_checkout", "ach", "bacs", "sepa", "autogiro", "becs", "becs_nz", "pad", "apple_pay", "ideal", "google_pay", "sofort", "bancontact", "giropay", "dotpay", "upi", "netbanking_emandates"]
+    GatewayName:
+      type: string
+      description: Name of the gateway in the payment method
+      enum: ["checkout_com", "ebanx", "mockgw"]
+      example: checkout_com
+      pattern: '^[a-z_]+$'
+    Environment:
+      type: string
+      enum: ["sandbox", "live"]
+      description: >
+        Description:
+          * `sandbox` - Testing environment
+          * `live` - Production environment
+    Phone:
+      type: object
+      description: Customer's phone number including country code.
+      properties:
+        country_code:
+          type: string
+          description: International country calling code
+        number:
+          type: string
+          description: Phone number
+  parameters:
+    AppId:
+      name: app_id
+      in: header
+      description: Application Id of the request sender (generated during sign up by the client)
+      required: true
+      schema:
+        type: string
+    Environment:
+      name: environment
+      in: header
+      description: Gateway environment to which the requests should be sent to. If the gateway supports separate live and sandbox environments, the request will be made to appropriate environment.
+      required: true
+      schema:
+        $ref: '#/components/schemas/Environment'
+  responses:
+    400Error:
+      description: BAD_REQUEST (All client errors)
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClientError'
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
